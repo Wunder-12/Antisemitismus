@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Der Krieg und ich – Anton aus Deutschland</title>
+<style>
+:root{--blue:#245a83;--pale:#eef6fb;--ink:#17212b;--green:#dff3e5;--red:#fde7e7;--gold:#fff4d6}
+*{box-sizing:border-box}
+body{margin:0;background:#f3f6f8;color:var(--ink);font-family:Arial,Helvetica,sans-serif;font-size:19px;line-height:1.5}
+main{max-width:900px;margin:0 auto;padding:18px}
+header{background:var(--blue);color:white;padding:24px;border-radius:18px;margin-bottom:18px}
+h1{font-size:clamp(1.7rem,5vw,2.5rem);margin:0 0 8px}
+h2{color:var(--blue);font-size:1.45rem;margin-top:0}
+.card{background:white;border-radius:16px;padding:20px;margin:16px 0;box-shadow:0 2px 8px #00000010}
+.story{background:var(--pale);border-left:7px solid var(--blue)}
+p{margin:10px 0}
+button{font:inherit;cursor:pointer;border:2px solid #9ab3c5;border-radius:12px;background:white;padding:10px 14px;margin:5px}
+button:focus,input:focus{outline:4px solid #f2c14e;outline-offset:2px}
+button.primary{background:var(--blue);border-color:var(--blue);color:white}
+button.speak{font-size:.9rem;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.readline{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.question{border-top:1px solid #dce4ea;padding-top:16px;margin-top:16px}
+.answers{display:grid;gap:8px;margin-top:10px}
+.answers button{text-align:left}
+.answers button.selected{border-color:var(--blue);background:var(--pale)}
+.feedback{padding:10px 14px;border-radius:10px;margin-top:10px;min-height:1.5em}
+.good{background:var(--green)}.bad{background:var(--red)}.neutral{background:var(--gold)}
+label{display:inline-flex;align-items:center;gap:8px;margin:8px 14px 8px 0}
+input{width:22px;height:22px}
+.small{font-size:.9rem;color:#45515b}
+footer{text-align:center;color:#53616c;padding:20px;font-size:.9rem}
+@media(max-width:600px){body{font-size:18px}main{padding:10px}.card{padding:15px}header{padding:18px}}
+</style>
+</head>
+<body>
+<main>
+<header>
+  <h1>📖 Der Krieg und ich</h1>
+  <p><strong>Anton aus Deutschland</strong></p>
+  <p>Wir lernen Antons Geschichte kennen.</p>
+  <button class="speak" onclick="speak('Der Krieg und ich. Anton aus Deutschland. Wir lernen Antons Geschichte kennen.')">🔊 Vorlesen</button>
+  <button class="speak" onclick="stopSpeech()">⏹ Vorlesen stoppen</button>
+</header>
+
+<section class="card story">
+  <h2>👦 Antons Geschichte</h2>
+  <div class="readline"><p>Anton lebt in Deutschland. Er ist ein Junge.</p><button class="speak" onclick="speak('Anton lebt in Deutschland. Er ist ein Junge.')">🔊</button></div>
+  <div class="readline"><p>In Deutschland regieren die Nationalsozialisten. Sie verfolgen jüdische Menschen. Das ist Unrecht.</p><button class="speak" onclick="speak('In Deutschland regieren die Nationalsozialisten. Sie verfolgen jüdische Menschen. Das ist Unrecht.')">🔊</button></div>
+  <div class="readline"><p>Anton kennt Greta. Greta ist jüdisch. Ihre Familie ist in Gefahr.</p><button class="speak" onclick="speak('Anton kennt Greta. Greta ist jüdisch. Ihre Familie ist in Gefahr.')">🔊</button></div>
+  <div class="readline"><p>Im November 1938 gibt es große Gewalt gegen jüdische Menschen. Viele Geschäfte und Wohnungen werden zerstört. Menschen werden angegriffen und verhaftet.</p><button class="speak" onclick="speak('Im November 1938 gibt es große Gewalt gegen jüdische Menschen. Viele Geschäfte und Wohnungen werden zerstört. Menschen werden angegriffen und verhaftet.')">🔊</button></div>
+  <div class="readline"><p>Anton hilft Greta und ihrer Familie. Er versteckt sie. Er möchte sie schützen.</p><button class="speak" onclick="speak('Anton hilft Greta und ihrer Familie. Er versteckt sie. Er möchte sie schützen.')">🔊</button></div>
+  <div class="readline"><p>Rudi verrät das Versteck. Antons Vater wird verhaftet.</p><button class="speak" onclick="speak('Rudi verrät das Versteck. Antons Vater wird verhaftet.')">🔊</button></div>
+  <div class="readline"><p>Am 1. September 1939 beginnt der Zweite Weltkrieg. Deutschland greift Polen an.</p><button class="speak" onclick="speak('Am 1. September 1939 beginnt der Zweite Weltkrieg. Deutschland greift Polen an.')">🔊</button></div>
+</section>
+
+<section class="card" id="quiz">
+<h2>🧠 Aufgabe 1: Was hast du verstanden?</h2>
+<p>Wähle die richtige Antwort aus.</p>
+<div id="multiple"></div>
+<div id="score1" class="feedback neutral" aria-live="polite">Beantworte die Fragen.</div>
+</section>
+
+<section class="card">
+<h2>☑️ Aufgabe 2: Richtig oder falsch?</h2>
+<p>Lies den Satz. Entscheide: Stimmt der Satz?</p>
+<div id="truefalse"></div>
+<div id="score2" class="feedback neutral" aria-live="polite">Wähle bei jedem Satz eine Antwort.</div>
+</section>
+
+<section class="card">
+<h2>❤️ Aufgabe 3: Wie fühlt sich Anton vielleicht?</h2>
+<p>Wähle ein oder mehrere Gefühle aus.</p>
+<div class="readline"><p>Anton hilft Greta. Er hat vielleicht Angst. Er ist vielleicht auch mutig.</p><button class="speak" onclick="speak('Anton hilft Greta. Er hat vielleicht Angst. Er ist vielleicht auch mutig.')">🔊</button></div>
+<div id="feelings">
+<label><input type="checkbox" value="ängstlich"> 😟 ängstlich</label>
+<label><input type="checkbox" value="mutig"> 💪 mutig</label>
+<label><input type="checkbox" value="traurig"> 😢 traurig</label>
+<label><input type="checkbox" value="fröhlich"> 😀 fröhlich</label>
+</div>
+<button class="primary" onclick="showFeelings()">Antwort prüfen</button>
+<div id="feelingFeedback" class="feedback neutral" aria-live="polite"></div>
+</section>
+
+<section class="card">
+<h2>🌟 Das ist wichtig</h2>
+<div class="readline"><p>Jüdische Menschen wurden verfolgt. Das war Unrecht.</p><button class="speak" onclick="speak('Jüdische Menschen wurden verfolgt. Das war Unrecht.')">🔊</button></div>
+<div class="readline"><p>Anton hilft anderen Menschen. Er zeigt Mut und Menschlichkeit.</p><button class="speak" onclick="speak('Anton hilft anderen Menschen. Er zeigt Mut und Menschlichkeit.')">🔊</button></div>
+<div class="readline"><p>Der Zweite Weltkrieg beginnt am 1. September 1939.</p><button class="speak" onclick="speak('Der Zweite Weltkrieg beginnt am 1. September 1939.')">🔊</button></div>
+</section>
+<footer>Du hast es geschafft! ⭐</footer>
+</main>
+<script>
+const multi = [
+ {q:"Wo lebt Anton?",a:["In Deutschland","In Frankreich","In Italien"],c:0},
+ {q:"Wer ist Greta?",a:["Antons Lehrerin","Ein jüdisches Mädchen","Eine Soldatin"],c:1},
+ {q:"Was macht Anton?",a:["Er versteckt Greta und ihre Familie.","Er verrät Greta.","Er fährt weg."],c:0},
+ {q:"Wer verrät das Versteck?",a:["Greta","Anton","Rudi"],c:2},
+ {q:"Was passiert mit Antons Vater?",a:["Er wird verhaftet.","Er wird König.","Er zieht um."],c:0},
+ {q:"Wann beginnt der Zweite Weltkrieg?",a:["Am 1. September 1939","Am 1. Januar 1938","Am 8. Mai 1945"],c:0}
+];
+const tf = [
+ {q:"Anton lebt in Deutschland.",c:true},
+ {q:"Greta und ihre Familie sind nicht in Gefahr.",c:false},
+ {q:"Anton hilft Greta und ihrer Familie.",c:true},
+ {q:"Der Zweite Weltkrieg beginnt 1939.",c:true}
+];
+function speak(t){if(!('speechSynthesis' in window)){alert('Vorlesen wird von diesem Browser nicht unterstützt.');return;}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(t);u.lang='de-DE';u.rate=.82;speechSynthesis.speak(u);}
+function stopSpeech(){if('speechSynthesis' in window)speechSynthesis.cancel();}
+function sayButton(t){return `<button class="speak" type="button" aria-label="Frage vorlesen" onclick="speak(${JSON.stringify(t).replace(/</g,'\\u003c')})">🔊 Vorlesen</button>`;}
+const m=document.getElementById('multiple');
+multi.forEach((item,i)=>{const d=document.createElement('div');d.className='question';d.innerHTML=`<div class="readline"><strong>${i+1}. ${item.q}</strong>${sayButton(item.q)}</div><div class="answers">${item.a.map((a,j)=>`<button type="button" data-i="${i}" data-j="${j}">${String.fromCharCode(65+j)}. ${a} ${sayButton(a)}</button>`).join('')}</div><div class="feedback" id="mf${i}" aria-live="polite"></div>`;m.appendChild(d);});
+m.addEventListener('click',e=>{const b=e.target.closest('button[data-i]');if(!b)return;const i=+b.dataset.i,j=+b.dataset.j;const correct=multi[i].c===j;document.querySelectorAll(`button[data-i="${i}"]`).forEach(x=>x.classList.remove('selected'));b.classList.add('selected');const f=document.getElementById('mf'+i);f.className='feedback '+(correct?'good':'bad');f.textContent=correct?'👍 Richtig!':'🙂 Noch nicht. Versuche es noch einmal.';if(correct)b.dataset.done='1';updateScores();});
+function updateScores(){const n=document.querySelectorAll('#multiple button[data-done="1"]').length;document.getElementById('score1').textContent=`Du hast ${n} von ${multi.length} Fragen richtig beantwortet.`;}
+const t=document.getElementById('truefalse');
+tf.forEach((item,i)=>{const d=document.createElement('div');d.className='question';d.innerHTML=`<div class="readline"><strong>${i+1}. ${item.q}</strong>${sayButton(item.q)}</div><div class="answers"><button type="button" data-t="${i}" data-v="true">✅ Richtig</button><button type="button" data-t="${i}" data-v="false">❌ Falsch</button></div><div class="feedback" id="tf${i}" aria-live="polite"></div>`;t.appendChild(d);});
+t.addEventListener('click',e=>{const b=e.target.closest('button[data-t]');if(!b)return;const i=+b.dataset.t;const correct=(b.dataset.v==='true')===tf[i].c;document.querySelectorAll(`button[data-t="${i}"]`).forEach(x=>x.classList.remove('selected'));b.classList.add('selected');const f=document.getElementById('tf'+i);f.className='feedback '+(correct?'good':'bad');f.textContent=correct?'👍 Richtig!':'🙂 Das stimmt noch nicht. Probiere es erneut.';if(correct)b.dataset.done='1';const n=document.querySelectorAll('#truefalse button[data-done="1"]').length;document.getElementById('score2').textContent=`Du hast ${n} von ${tf.length} Sätzen richtig bewertet.`;});
+function showFeelings(){const chosen=[...document.querySelectorAll('#feelings input:checked')].map(x=>x.value);const f=document.getElementById('feelingFeedback');f.className='feedback neutral';f.textContent=chosen.length?'Danke! Menschen können verschieden fühlen. Anton könnte Angst haben, traurig sein und zugleich mutig handeln.':'Wähle bitte mindestens ein Gefühl aus.';}
+</script>
+</body>
+</html>
